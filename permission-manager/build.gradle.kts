@@ -4,15 +4,21 @@ plugins {
     id("maven-publish")
 }
 
-// For single jitpack coordinate
+/**
+ * JitPack 用的 maven-publish 配置
+ */
 afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
+                // groupId 建议保持和之前 base 一致
                 groupId = "com.github.yangxiaobinhaoshuai.Fundamental"
-                artifactId = "base"
+                // 以后依赖时的 artifactId
+                artifactId = "permission_manager"
+                // 这个 version 写不写都行，但建议和 tag 一致，方便你自己看
                 version = libs.versions.tagVersion.get()
 
+                // Android Library 要从 release 组件导出
                 from(components["release"])
             }
         }
@@ -20,7 +26,7 @@ afterEvaluate {
 }
 
 android {
-    namespace = "io.github.wukeji.base"
+    namespace = "io.github.wukeji.permission_manager"
     compileSdk {
         version = release(36)
     }
@@ -51,10 +57,10 @@ android {
 }
 
 dependencies {
-    implementation("com.github.yangxiaobinhaoshuai:NeatLog:0.0.4")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

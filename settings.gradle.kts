@@ -23,3 +23,4 @@ dependencyResolutionManagement {
 rootProject.name = "Fundamental"
 include(":app")
 include(":base")
+include(":permission-manager")
